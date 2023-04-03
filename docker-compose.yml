@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  db:
+    image: 'mysql:latest'
+    container_name: db
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_USER: admin1
+      MYSQL_PASSWORD: password123
+      MYSQL_DATABASE: g_learning
+    restart: always
+    networks:
+      - pma_networks
+  pma:
+    container_name: phpmyadmin_1
+    image: phpmyadmin:latest
+    restart: always
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password123
+    ports:
+      - '8081:80'
+    depends_on:
+      - db
+    volumes:
+      - pma_data:/var/lib/phpmyadmin/data
+    networks:
+      - pma_networks
+volumes:
+  mysql_data:
+  pma_data:
+networks:
+  pma_networks:
