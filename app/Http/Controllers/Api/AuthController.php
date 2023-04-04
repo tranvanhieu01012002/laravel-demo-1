@@ -22,8 +22,8 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         // if want to login
-        // $token = Auth::attempt($credentials);
-        $token = Auth::setTTL(1)->attempt($credentials);
+        $token = Auth::attempt($credentials);
+        // $token = Auth::setTTL(1)->attempt($credentials);
         if (!$token) {
             return response()->json([
                 'status' => 'error',
@@ -54,7 +54,6 @@ class AuthController extends Controller
         ]);
 
         $token = Auth::login($user);
-        dd($token);
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
@@ -100,4 +99,5 @@ class AuthController extends Controller
 
         // return auth()->payload();
     }
+
 }
