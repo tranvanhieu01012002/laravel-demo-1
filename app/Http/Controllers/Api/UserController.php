@@ -11,4 +11,8 @@ class UserController extends Controller
     public function getAll(){
         return User::paginate(20);
     }
+
+    public function showUser(string $id){
+        return User::find($id);
+    }
 }

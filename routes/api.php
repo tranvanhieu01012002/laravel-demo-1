@@ -31,6 +31,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('refresh', [AuthController::class, 'refresh']);
     Route::get('profile', [AuthController::class, 'me']);
     Route::get('users',[UserController::class,'getAll']);
+    Route::get('users/{id}',[UserController::class,'showUser']);
 });
 
 Route::get("errors", [ErrorController::class, 'redirectTokenExpired'])->name('errors.jwt.expired');
