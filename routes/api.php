@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\GoogleController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ErrorController;
@@ -24,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
+    Route::post('login/google',GoogleController::class);
 });
 
 Route::middleware('auth:api')->group(function () {
