@@ -23,6 +23,13 @@ class SendMessage implements ShouldBroadcast
         // https://www.youtube.com/watch?v=rNOGLLPXzwc
     }
 
+    public function broadcastWith()
+    {
+        return [
+            'hello' => 'there'
+        ];
+    }
+
     /**
      * Get the channels the event should broadcast on.
      *
@@ -31,7 +38,7 @@ class SendMessage implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new PrivateChannel('room.1'),
         ];
     }
 }
