@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\Api\Auth\GoogleController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ErrorController;
+use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\ErrorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('profile', [AuthController::class, 'me']);
     Route::get('users',[UserController::class,'getAll']);
     Route::get('users/{id}',[UserController::class,'showUser']);
+    Route::get('rooms/{id}',[RoomController::class,'open'])->middleware("idIsInteger");
 });
 
 Route::get("errors", [ErrorController::class, 'redirectTokenExpired'])->name('errors.jwt.expired');
+Route::get("errors", [ErrorController::class, 'InvalidateId'])->name('errors.id.invalidate');

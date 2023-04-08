@@ -15,6 +15,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Services\Auth\ThirdParty\IAuthService::class,
             \App\Services\Auth\ThirdParty\GoogleAuthService::class,
         );
+
+        $this->app->bind(
+            \App\Services\Room\IRoomService::class,
+            \App\Services\Room\RoomService::class
+        );
     }
 
     /**
