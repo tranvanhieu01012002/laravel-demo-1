@@ -18,6 +18,8 @@ class RoomController extends Controller
     public function open(int $id)
     {
         $response = $this->roomService->open($id);
-        return response()->json($response);
+        if ($response["status"]) {
+            return response()->json($response, 200);
+        } else return response()->json($response, 404);
     }
 }

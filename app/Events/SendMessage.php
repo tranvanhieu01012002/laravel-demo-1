@@ -38,7 +38,7 @@ class SendMessage implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('room.1'),
+            new PresenceChannel('room.1'),
         ];
     }
 }
