@@ -37,6 +37,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('users', [UserController::class, 'getAll']);
     Route::get('users/{id}', [UserController::class, 'showUser']);
 
+    Route::get('rooms/create',[RoomController::class, 'create']);
+
     Route::group([
         "middleware" => 'idIsInteger',
         "prefix" => "rooms/{id}"
