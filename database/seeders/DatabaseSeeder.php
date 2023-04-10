@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Answer;
+use App\Models\Question;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +21,16 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $questions = Question::factory(10)->create();
+        foreach ($questions as $question) {
+            for ($i = 1; $i < 5; $i++) {
+                $answer = ["is_correct" => 0];
+                if ($i == 4) {
+                    $answer = ["is_correct" => 1];
+                }
+                Answer::factory()->create(["question_id" => $question->id,...$answer]);
+            }
+        }
     }
 }
