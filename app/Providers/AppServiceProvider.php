@@ -20,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Services\Room\IRoomService::class,
             \App\Services\Room\RoomService::class
         );
+
+        $this->app->bind(
+            \App\Services\Question\IQuestionService::class,
+            \App\Services\Question\QuestionService::class
+        );
     }
 
     /**
