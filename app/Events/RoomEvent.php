@@ -19,11 +19,17 @@ class RoomEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(int $roomId)
     {
-        //
+        $this->roomId = $roomId;
     }
 
+    public function broadcastWith()
+    {
+        return [
+            'hello' => 'there'
+        ];
+    }
     /**
      * Get the channels the event should broadcast on.
      *
@@ -32,7 +38,7 @@ class RoomEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PresenceChannel('room' . $this->roomId),
+            new PresenceChannel('room.' . $this->roomId),
         ];
     }
 }
