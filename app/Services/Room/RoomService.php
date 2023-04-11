@@ -13,10 +13,17 @@ class RoomService implements IRoomService
 
     public function open(int $id): array
     {
-        if (Redis::get($id)) {
+        $roomOwnerId = Redis::get($id);
+        if ($roomOwnerId) {
+            $isOwner = false;
+            if (Auth::id() === $roomOwnerId) {
+                $isOwner = true;
+            }
             return [
                 "status" => true,
-                "data" =>  $id
+                "data" =>  $id,
+                "user_id" => $roomOwnerId,
+                "is_owner" => $isOwner
             ];
         } else {
             return [
@@ -34,7 +41,6 @@ class RoomService implements IRoomService
             $key = rand(2, 2000);
         } while (in_array($key, $currentKeys));
         $redis->set($key, Auth::id(), "EX", self::$expired * 60);
-        // RoomEvent::dispatch($key);
         return $key;
     }
 }
