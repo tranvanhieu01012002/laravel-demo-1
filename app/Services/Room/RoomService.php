@@ -34,7 +34,7 @@ class RoomService implements IRoomService
             $key = rand(2, 2000);
         } while (in_array($key, $currentKeys));
         $redis->set($key, Auth::id(), "EX", self::$expired * 60);
-        RoomEvent::dispatch($key);
+        // RoomEvent::dispatch($key);
         return $key;
     }
 }
