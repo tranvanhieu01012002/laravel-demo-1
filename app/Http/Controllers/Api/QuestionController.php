@@ -53,4 +53,10 @@ class QuestionController extends Controller
                 "data" => $response
             ]);
     }
-}
+
+    public function viewResult(int $roomId)
+    {
+        $response = $this->questionService->viewResult($roomId);
+        return response()->json(["data" => $response]);
+    }
+}   

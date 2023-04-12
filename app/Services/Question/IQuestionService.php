@@ -8,4 +8,6 @@ interface IQuestionService {
     public function nextQuestion(int $roomId);
 
     public function pushAnswer(int $roomId, int $score);
+
+    public function viewResult(int $roomId): array;
 }

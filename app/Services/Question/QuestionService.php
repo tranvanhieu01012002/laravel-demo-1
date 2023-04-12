@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Redis;
 
 class QuestionService implements IQuestionService
 {
+    private static $expired = 10;
+
     public function getQuestionWithAnswers(int $roomId)
     {
         return Question::take(2)->with("answers")->get();
@@ -22,9 +24,9 @@ class QuestionService implements IQuestionService
     public function pushAnswer(int $roomId, int $score)
     {
         $redis = Redis::connection();
-        $userId = Auth::id();
+        $userDB = Auth::user();
 
-        $key = $this->handleKey($roomId, $userId);
+        $key = $this->handleKey($roomId, $userDB->id);
         $user = $redis->get($key);
 
         if ($user) {
@@ -32,17 +34,29 @@ class QuestionService implements IQuestionService
             $user->score += $score;
         } else {
             $user = [
-                "user_id" => $userId,
+                "user_id" => $userDB->id,
+                "user_name" => $userDB->name,
                 "score" => $score
             ];
         }
 
-        return $redis->set($key, json_encode($user));
+        return $redis->set($key, json_encode($user), "EX", self::$expired * 60);
     }
 
     public function handleKey(int $roomId, string $userId)
     {
         $prefixKey = "room_";
         return $prefixKey . $roomId . "_" . $userId;
+    }
+
+    public function viewResult(int $roomId): array
+    {
+        $redis = Redis::connection();
+        $currentKeys = $redis->keys('room_' . $roomId . "*");
+        $users = [];
+        foreach ($currentKeys as $key) {
+            array_push($users, json_decode($redis->get($key)));
+        }
+        return $users;
     }
 }
