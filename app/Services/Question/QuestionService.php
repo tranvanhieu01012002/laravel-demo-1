@@ -3,6 +3,7 @@
 namespace App\Services\Question;
 
 use App\Events\RoomEvent;
+use App\Events\ShowResult;
 use App\Models\Question;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -57,6 +58,13 @@ class QuestionService implements IQuestionService
         foreach ($currentKeys as $key) {
             array_push($users, json_decode($redis->get($key)));
         }
+
+        usort($users, function ($first, $second) {
+            return $first->score < $second->score;
+        });
+
+        broadcast(new ShowResult($users, $roomId))->toOthers();
+        
         return $users;
     }
 }
