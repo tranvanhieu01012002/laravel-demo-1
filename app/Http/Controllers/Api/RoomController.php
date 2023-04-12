@@ -25,8 +25,6 @@ class RoomController extends Controller
 
     public function create()
     {
-        return response()->json([
-            "room" => $this->roomService->create()
-        ]);
+        return response()->json($this->roomService->create());
     }
 }

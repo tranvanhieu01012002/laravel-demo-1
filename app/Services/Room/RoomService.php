@@ -2,7 +2,6 @@
 
 namespace App\Services\Room;;
 
-use App\Events\RoomEvent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 
@@ -37,10 +36,21 @@ class RoomService implements IRoomService
     {
         $redis = Redis::connection();
         $currentKeys = $redis->keys("*");
+        $key = $this->generateRoomId(2, 2000, $currentKeys);
+        $userId = Auth::id();
+        $redis->set($key, $userId, "EX", self::$expired * 60);
+
+        return [
+            "room" => $key,
+            "user_id" => $userId
+        ];
+    }
+
+    public function generateRoomId(int $start, int $end, $listKeys): int
+    {
         do {
-            $key = rand(2, 2000);
-        } while (in_array($key, $currentKeys));
-        $redis->set($key, Auth::id(), "EX", self::$expired * 60);
+            $key = rand($start, $end);
+        } while (in_array($key, $listKeys));
         return $key;
     }
 }
