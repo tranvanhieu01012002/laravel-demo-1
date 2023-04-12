@@ -36,4 +36,21 @@ class QuestionController extends Controller
                 "data" => $response
             ]);
     }
+
+    public function pushAnswer(int $roomId, Request $request)
+    {
+        if ($request->input('is_correct')) {
+            $response = $this->questionService
+                ->pushAnswer(
+                    $roomId,
+                    $request->input('score'),
+                );
+        } else {
+            $response = "oh! Somethings was wrong!";
+        }
+        return response()
+            ->json([
+                "data" => $response
+            ]);
+    }
 }

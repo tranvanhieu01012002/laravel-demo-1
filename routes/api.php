@@ -46,6 +46,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('', [RoomController::class, 'open']);
         Route::get('questions', [QuestionController::class, 'getQuestions']);
         Route::post('next-question',[QuestionController::class,'nextQuestion']);
+        Route::post('questions/answers',[QuestionController::class,'pushAnswer']);
     });
 });
 
