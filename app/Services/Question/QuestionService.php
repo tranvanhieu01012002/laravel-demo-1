@@ -2,6 +2,7 @@
 
 namespace App\Services\Question;
 
+use App\Constants\Room;
 use App\Events\RoomEvent;
 use App\Events\ShowResult;
 use App\Models\Question;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Redis;
 
 class QuestionService implements IQuestionService
 {
-    private static $expired = 10;
 
     public function getQuestionWithAnswers(int $roomId)
     {
@@ -27,7 +27,7 @@ class QuestionService implements IQuestionService
         $redis = Redis::connection();
         $userDB = Auth::user();
 
-        $key = $this->handleKey($roomId, $userDB->id);
+        $key = self::handleKey($roomId, $userDB->id);
         $user = $redis->get($key);
 
         if ($user) {
@@ -41,19 +41,18 @@ class QuestionService implements IQuestionService
             ];
         }
 
-        return $redis->set($key, json_encode($user), "EX", self::$expired * 60);
+        return $redis->set($key, json_encode($user), "EX", Room::EXPIRED_TIME * 60);
     }
 
-    public function handleKey(int $roomId, string $userId)
+    public static function handleKey(int $roomId, string $userId)
     {
-        $prefixKey = "room_";
-        return $prefixKey . $roomId . "_" . $userId;
+        return Room::PREFIX. $roomId . "_" . $userId;
     }
 
     public function viewResult(int $roomId): array
     {
         $redis = Redis::connection();
-        $currentKeys = $redis->keys('room_' . $roomId . "*");
+        $currentKeys = $redis->keys(Room::PREFIX . $roomId . "*");
         $users = [];
         foreach ($currentKeys as $key) {
             array_push($users, json_decode($redis->get($key)));

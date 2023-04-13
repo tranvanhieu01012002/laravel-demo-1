@@ -28,7 +28,9 @@ class ShowResult implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        return $this->result;
+        return [
+            "data" => $this->result,
+        ];
     }
 
     /**
