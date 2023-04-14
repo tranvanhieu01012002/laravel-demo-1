@@ -14,12 +14,12 @@ class QuestionService implements IQuestionService
 
     public function getQuestionWithAnswers(int $roomId)
     {
-        return Question::take(2)->with("answers")->get();
+        return Question::take(6)->with("answers")->get();
     }
 
     public function nextQuestion(int $roomId)
     {
-        return broadcast(new RoomEvent($roomId))->toOthers();
+        return broadcast(new RoomEvent($roomId));
     }
 
     public function pushAnswer(int $roomId, int $score)
@@ -62,7 +62,7 @@ class QuestionService implements IQuestionService
             return $first->score < $second->score;
         });
 
-        broadcast(new ShowResult($users, $roomId))->toOthers();
+        broadcast(new ShowResult($users, $roomId));
         
         return $users;
     }
