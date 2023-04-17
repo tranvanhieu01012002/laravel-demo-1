@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ErrorController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\RoomController;
+use App\Http\Controllers\Api\SetQuestionController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('users', [UserController::class, 'getAll']);
     Route::get('users/{id}', [UserController::class, 'showUser']);
 
-    Route::get('rooms/create',[RoomController::class, 'create']);
+    Route::get('rooms/create', [RoomController::class, 'create']);
 
     Route::group([
         "middleware" => 'idIsInteger',
@@ -45,10 +46,12 @@ Route::middleware('auth:api')->group(function () {
     ], function () {
         Route::get('', [RoomController::class, 'open']);
         Route::get('questions', [QuestionController::class, 'getQuestions']);
-        Route::post('next-question',[QuestionController::class,'nextQuestion']);
-        Route::post('questions/answers',[QuestionController::class,'pushAnswer']);
-        Route::get('questions/view-result',[QuestionController::class,'viewResult']);
+        Route::post('next-question', [QuestionController::class, 'nextQuestion']);
+        Route::post('questions/answers', [QuestionController::class, 'pushAnswer']);
+        Route::get('questions/view-result', [QuestionController::class, 'viewResult']);
     });
+
+    Route::get('set-questions', [SetQuestionController::class, "getAll"]);
 });
 
 Route::get("errors", [ErrorController::class, 'redirectTokenExpired'])->name('errors.jwt.expired');

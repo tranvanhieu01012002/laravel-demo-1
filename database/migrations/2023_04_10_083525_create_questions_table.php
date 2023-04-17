@@ -15,10 +15,10 @@ return new class extends Migration
             $table->increments('id');
             $table->text('content')->nullable();
             $table->text('image')->nullable();
-            $table->uuid('user_id');
-            $table->foreign('user_id')
+            $table->integer('set_question_id')->unsigned();
+            $table->foreign('set_question_id')
                 ->references('id')
-                ->on('users')
+                ->on('set_questions')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();
@@ -33,3 +33,13 @@ return new class extends Migration
         Schema::dropIfExists('questions');
     }
 };
+// $table->increments('id');
+// $table->text('content')->nullable();
+// $table->text('image')->nullable();
+// $table->integer('set_question_id')->unsigned();
+// $table->foreign('set_question_id')
+// ->references('id')
+// ->on('set_questions')
+// ->onDelete('cascade')
+// ->onUpdate('cascade');
+// $table->timestamps();

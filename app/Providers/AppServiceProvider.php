@@ -25,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Services\Question\IQuestionService::class,
             \App\Services\Question\QuestionService::class
         );
+
+        $this->app->bind(
+            \App\Services\Question\ISetQuestionService::class,
+            \App\Services\Question\SetQuestionService::class
+        );
     }
 
     /**

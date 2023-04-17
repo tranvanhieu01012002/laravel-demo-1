@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\SetQuestion;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +22,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
+        SetQuestion::factory(5)->create();
         $questions = Question::factory(10)->create();
         foreach ($questions as $question) {
             for ($i = 1; $i < 5; $i++) {

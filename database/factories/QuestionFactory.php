@@ -19,7 +19,7 @@ class QuestionFactory extends Factory
     {
         return [
             'content' => fake()->sentence(10),
-            'user_id'=> User::first()->id,
+            'set_question_id'=> 1,
             'image'=> "https://hinhanhdephd.com/wp-content/uploads/2015/12/hinh-anh-dep-girl-xinh-hinh-nen-dep-gai-xinh.jpg",
         ];
     }
