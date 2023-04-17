@@ -9,6 +9,11 @@ class SetQuestion extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        "created_at",
+        "updated_at"
+    ];
+
     public function question(){
         return $this->hasMany(Question::class);
     }
