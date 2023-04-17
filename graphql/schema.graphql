@@ -27,7 +27,7 @@ type # type Query {
 Query {
     user(id: ID! @eq): User @find
     # users : [User!]! @all
-    # hello(name: String! @eq): String! @upperCase
+    hello(name: String="hieu" @eq): String!
     # hello: String! @upperCase
     users: [User!]! @paginate
 }
@@ -56,5 +56,7 @@ type User {
 }
 
 type Mutation {
-  createUser(name:String!, email:String!):User! @create
+  createUser(name:String!, email:String!, password:String!):User! @create
+#     createUser(name:String!, email:String!, password:String!):User! @create
+  createNewUser(name:String!, email:String!, password:String!):User!
 }

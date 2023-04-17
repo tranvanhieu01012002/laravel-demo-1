@@ -1,8 +1,8 @@
 <?php
 
-namespace App\GraphQL\Types\User;
+namespace App\GraphQL\Mutations;
 
-final class Name
+final class Login
 {
     /**
      * @param  null  $_
