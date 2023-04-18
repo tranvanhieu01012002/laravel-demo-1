@@ -26,4 +26,10 @@ class SetQuestionService implements ISetQuestionService
         $setQuestion->save();
         return $setQuestion;
     }
+    
+    public function delete(int $id)
+    {
+        $setQuestion = SetQuestion::find($id);
+        return $setQuestion->delete();
+    }
 }

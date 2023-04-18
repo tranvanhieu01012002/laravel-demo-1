@@ -53,6 +53,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('set-questions', [SetQuestionController::class, "getAll"]);
     Route::post('set-questions', [SetQuestionController::class, "create"]);
+    Route::delete('set-questions/{id}', [SetQuestionController::class, "delete"]);
 });
 
 Route::get("errors", [ErrorController::class, 'redirectTokenExpired'])->name('errors.jwt.expired');

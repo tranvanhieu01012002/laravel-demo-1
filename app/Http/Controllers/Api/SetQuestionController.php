@@ -24,4 +24,9 @@ class SetQuestionController extends Controller
         $response = $this->setQuestion->create($request);
         return response()->json($response, 201);
     }
+
+    public function delete(int $id){
+        $response = $this->setQuestion->delete($id);
+        return response()->json($response, 200);
+    }
 }
