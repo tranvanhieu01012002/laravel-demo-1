@@ -14,6 +14,11 @@ class SetQuestion extends Model
         "updated_at"
     ];
 
+    protected $fillable = [
+        "user_id",
+        "name"
+    ];
+
     public function questions(){
         return $this->hasMany(Question::class);
     }

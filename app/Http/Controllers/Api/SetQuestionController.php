@@ -19,4 +19,9 @@ class SetQuestionController extends Controller
         $response = $this->setQuestion->getAll();
         return response()->json($response, 200);
     }
+
+    public function create(Request $request){
+        $response = $this->setQuestion->create($request);
+        return response()->json($response, 201);
+    }
 }
