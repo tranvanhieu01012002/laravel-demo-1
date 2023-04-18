@@ -14,7 +14,8 @@ class SetQuestion extends Model
         "updated_at"
     ];
 
-    public function question(){
+    public function questions(){
         return $this->hasMany(Question::class);
     }
+    
 }

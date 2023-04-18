@@ -10,6 +10,6 @@ class SetQuestionService implements ISetQuestionService
     public function getAll()
     {
         $user = Auth::user();
-        return $user->setQuestion;
+        return SetQuestion::where("user_id",$user->id)->withCount("questions")->get();
     }
 }
