@@ -15,12 +15,14 @@ class Question extends Model
         'created_at',
         'updated_at',
     ];
-    
-    public function answers(): HasMany {
+
+    public function answers(): HasMany
+    {
         return $this->hasMany(Answer::class);
     }
 
-    public function setQuestion():BelongsTo{
+    public function setQuestion(): BelongsTo
+    {
         return $this->belongsTo(SetQuestion::class);
     }
 }
