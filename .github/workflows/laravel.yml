@@ -39,6 +39,7 @@ jobs:
           php artisan route:cache
           php artisan config:clear
           php artisan config:cache
+          composer dump-autoload
       - name: Migrate data
         run: php artisan migrate
       - name: Seed data
