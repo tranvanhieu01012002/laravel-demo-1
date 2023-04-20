@@ -15,18 +15,27 @@ class SetQuestionController extends Controller
         $this->setQuestion = $setQuestion;
     }
 
-    public function getAll(){
+    public function getAll()
+    {
         $response = $this->setQuestion->getAll();
         return response()->json($response, 200);
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $response = $this->setQuestion->create($request);
         return response()->json($response, 201);
     }
 
-    public function delete(int $id){
+    public function delete(int $id)
+    {
         $response = $this->setQuestion->delete($id);
+        return response()->json($response, 200);
+    }
+
+    public function getQuestions(int $id)
+    {
+        $response = $this->setQuestion->getQuestions($id);
         return response()->json($response, 200);
     }
 }

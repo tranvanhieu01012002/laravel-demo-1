@@ -26,10 +26,27 @@ class SetQuestionService implements ISetQuestionService
         $setQuestion->save();
         return $setQuestion;
     }
-    
+
     public function delete(int $id)
     {
         $setQuestion = SetQuestion::find($id);
         return $setQuestion->delete();
+    }
+
+    public function getQuestions(int $id): array
+    {
+        $user = Auth::user();
+        try {
+            $setQuestion = SetQuestion::find($id, ["name"])->where('user_id', $user->id)->with('questions.answers')->first();
+            return [
+                'status'=> true,
+                'data' => $setQuestion->questions,
+            ];
+        } catch (\Throwable $th) {
+            return [
+                'status' => false,
+                'data' =>  $th->getMessage()
+            ];
+        }
     }
 }
