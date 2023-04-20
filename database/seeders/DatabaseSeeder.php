@@ -16,12 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(200)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        \App\Models\User::factory(10)->create();
+
+        \App\Models\User::factory()->create([
+            'name' => 'hieu',
+            'email' => 'hieu@gmail.com',
+        ]);
         SetQuestion::factory(5)->create();
         $questions = Question::factory(10)->create();
         foreach ($questions as $question) {
