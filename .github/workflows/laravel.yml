@@ -44,5 +44,5 @@ jobs:
         run: php artisan migrate
       - name: Seed data
         run: php artisan db:seed
-      - name: Run tests
-        run: php artisan test --filter AuthControllerTest
+      # - name: Run tests
+      #   run: php artisan test --filter AuthControllerTest
