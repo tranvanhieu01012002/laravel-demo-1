@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Services\Question\QuestionService;
 use App\Services\Room\IRoomService;
 use App\Services\Room\RoomService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Mockery;
 use Tests\TestCase;
@@ -43,9 +45,7 @@ class RoomServiceTest extends TestCase
         $this->assertArrayHasKey("user_id", $result);
         $this->assertEquals("1", $result["user_id"]);
 
-        $this->beforeApplicationDestroyed(function () use ($result) {
-            Redis::del($result["room"]);
-        });
+        Redis::del($result["room"]);
     }
 
     public function test_open_room_fail(): void
@@ -57,9 +57,7 @@ class RoomServiceTest extends TestCase
         $this->assertEquals(true, $result["status"]);
         $this->assertEquals($this->roomId, $result["data"]);
 
-        $this->beforeApplicationDestroyed(function () {
-            Redis::del($this->roomId);
-        });
+        Redis::del($this->roomId);
     }
 
 
@@ -76,8 +74,18 @@ class RoomServiceTest extends TestCase
         $this->assertEquals(1, $result["user_id"]);
         $this->assertEquals(false, $result["is_owner"]);
 
-        $this->beforeApplicationDestroyed(function () {
-            Redis::del($this->roomId);
-        });
+        Redis::del($this->roomId);
+    }
+
+    public function test_add_to_redis(): void
+    {
+        $roomServiceMock = Mockery::mock(RoomService::class)->makePartial();
+        $redisMock = Mockery::mock(Redis::connection());
+        $user = Auth::user();
+        $roomServiceMock->addToRedis($redisMock, $user, $this->roomId);
+        $key = QuestionService::handleKey($this->roomId, $user->id);
+        $instance = Redis::get($key);
+        $this->assertNotNull($instance);
+        Redis::del($key);
     }
 }
