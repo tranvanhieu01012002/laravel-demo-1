@@ -35,11 +35,9 @@ class SetQuestionService implements ISetQuestionService
 
     public function getQuestions(int $id): array
     {
-        $user = Auth::user();
         $id = intval($id);
         try {
             $setQuestion = SetQuestion::where("id",$id)
-                ->where('user_id', $user->id)
                 ->with('questions.answers')
                 ->first();
             return [
