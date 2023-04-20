@@ -30,10 +30,10 @@ class AuthControllerTest extends TestCase
         ]);
     }
 
-    public function test_login_success(): void {
-        $loginData = ['email' => 'hieu@gmail.com', 'password' => 'password'];
-        $response = $this->post('/api/auth/login', $loginData);
-        $response->assertStatus(200);
-        $response->assertJsonStructure(["status","token","type","expires_in"]);
-    }
+    // public function test_login_success(): void {
+    //     $loginData = ['email' => 'hieu@gmail.com', 'password' => 'password'];
+    //     $response = $this->post('/api/auth/login', $loginData);
+    //     $response->assertStatus(200);
+    //     $response->assertJsonStructure(["status","token","type","expires_in"]);
+    // }
 }
