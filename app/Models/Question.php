@@ -18,6 +18,7 @@ class Question extends Model
 
     protected $fillable = [
         "content",
+        "set_question_id"
     ];
 
     public function answers(): HasMany

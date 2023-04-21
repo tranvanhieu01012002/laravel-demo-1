@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->increments('id');
             $table->text('content');
-            $table->integer('question_id')->unsigned();
+            $table->integer('question_id')->unsigned()->nullable();
             $table->boolean('is_correct');
             $table->foreign('question_id')
                 ->references('id')

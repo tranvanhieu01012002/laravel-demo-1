@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->text('content')->nullable();
             $table->text('image')->nullable();
-            $table->integer('set_question_id')->unsigned();
+            $table->integer('set_question_id')->unsigned()->nullable();
             $table->foreign('set_question_id')
                 ->references('id')
                 ->on('set_questions')

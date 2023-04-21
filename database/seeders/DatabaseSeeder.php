@@ -17,12 +17,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        \App\Models\User::factory(10)->create();
-
         \App\Models\User::factory()->create([
             'name' => 'hieu',
             'email' => 'hieu@gmail.com',
         ]);
+        \App\Models\User::factory(10)->create();
         SetQuestion::factory(5)->create();
         $questions = Question::factory(10)->create();
         foreach ($questions as $question) {
@@ -31,7 +30,7 @@ class DatabaseSeeder extends Seeder
                 if ($i == 4) {
                     $answer = ["is_correct" => 1];
                 }
-                Answer::factory()->create(["question_id" => $question->id,...$answer]);
+                Answer::factory()->create(["question_id" => $question->id, ...$answer]);
             }
         }
     }
