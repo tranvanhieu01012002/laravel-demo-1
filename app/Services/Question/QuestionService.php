@@ -6,7 +6,9 @@ use App\Constants\Room;
 use App\Events\RoomEvent;
 use App\Events\ShowResult;
 use App\Models\Question;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class QuestionService implements IQuestionService
@@ -46,7 +48,7 @@ class QuestionService implements IQuestionService
 
     public static function handleKey(int $roomId, string $userId)
     {
-        return Room::PREFIX. $roomId . "_" . $userId;
+        return Room::PREFIX . $roomId . "_" . $userId;
     }
 
     public function viewResult(int $roomId): array
@@ -63,7 +65,32 @@ class QuestionService implements IQuestionService
         });
 
         broadcast(new ShowResult($users, $roomId));
-        
+
         return $users;
+    }
+
+    public function update(Request $request)
+    {
+        $questions = $request->input("questions");
+        $questionIds = array_column($questions,'id');
+        $index = 0;
+        $questionDBs = Question::whereIn("id",array_values($questionIds))->with("answers")->get();
+
+        foreach ( $questionDBs as $questionDB) {
+            $questionDB->content = $questions[$index]["content"];
+            $indexAnswer = 0;
+            foreach ($questionDB->answers as $answer) {
+                $answerRequest =$questions[$index]["answers"][$indexAnswer];
+                $answer->content = $answerRequest["content"];
+                $answer->is_correct = $answerRequest["is_correct"];
+                $indexAnswer++;
+            }
+            $index++;
+            $questionDB->push();
+        }
+        return [
+            "status" => true,
+            "data" =>  $questionDBs
+        ];
     }
 }

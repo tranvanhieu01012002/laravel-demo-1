@@ -16,6 +16,10 @@ class Question extends Model
         'updated_at',
     ];
 
+    protected $fillable = [
+        "content",
+    ];
+
     public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);

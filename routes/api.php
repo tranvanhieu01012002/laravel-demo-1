@@ -51,6 +51,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('questions/view-result', [QuestionController::class, 'viewResult']);
     });
 
+    Route::put('questions', [QuestionController::class, 'update']);
+
     Route::prefix('set-questions')->group(function(){
         Route::get('/', [SetQuestionController::class, "getAll"]);
         Route::get('/{id}/questions',[SetQuestionController::class,"getQuestions"]);

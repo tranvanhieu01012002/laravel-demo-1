@@ -59,4 +59,10 @@ class QuestionController extends Controller
         $response = $this->questionService->viewResult($roomId);
         return response()->json(["data" => $response]);
     }
-}   
+
+    public function update(Request $request)
+    {
+        $response = $this->questionService->update($request);
+        return response()->json($response);
+    }
+}

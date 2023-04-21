@@ -15,6 +15,11 @@ class Answer extends Model
         'updated_at',
     ];
 
+    protected $fillable = [
+        "content",
+        "is_correct"
+    ];
+
     public function question(): BelongsTo
     {
         return $this->belongsTo('questions');
