@@ -72,15 +72,16 @@ class QuestionService implements IQuestionService
     public function update(Request $request)
     {
         $questions = $request->input("questions");
-        $questionDBs = $this->getQuestionInSet(1);
+        $setQuestionId = $request->input("set_question_id");
+        $questionDBs = $this->getQuestionInSet($setQuestionId);
 
         $remainQuestions = $this->makeForLoopToUpdateAndReturnRemainQuestion($questions, $questionDBs);
 
         foreach ($remainQuestions as $remainQuestion) {
-            $this->addNewQuestion($remainQuestion, 1);
+            $this->addNewQuestion($remainQuestion, $setQuestionId);
         }
 
-        $refreshQuestionDBs = $this->getQuestionInSet(1);
+        $refreshQuestionDBs = $this->getQuestionInSet($setQuestionId);
 
         return [
             "status" => true,
