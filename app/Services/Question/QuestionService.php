@@ -5,12 +5,10 @@ namespace App\Services\Question;
 use App\Constants\Room;
 use App\Events\RoomEvent;
 use App\Events\ShowResult;
-use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class QuestionService implements IQuestionService
@@ -74,29 +72,25 @@ class QuestionService implements IQuestionService
     public function update(Request $request)
     {
         $questions = $request->input("questions");
-        // $questionIds = array_column($questions, 'id');
-        $questionDBs = Question::where("set_question_id", 1)->with("answers")->get();
+        $questionDBs = $this->getQuestionInSet(1);
 
-        $index = $this->makeForLoopToUpdateAndReturnRemainQuestion($questions, $questionDBs);
-
-        $remainQuestions = array_slice($questions, $index);
+        $remainQuestions = $this->makeForLoopToUpdateAndReturnRemainQuestion($questions, $questionDBs);
 
         foreach ($remainQuestions as $remainQuestion) {
-            Log::debug("chay vo day nao");
             $this->addNewQuestion($remainQuestion, 1);
         }
 
+        $refreshQuestionDBs = $this->getQuestionInSet(1);
+
         return [
             "status" => true,
-            "data" => "success"
+            "data" => $refreshQuestionDBs
         ];
     }
 
     protected function makeForLoopToUpdateAndReturnRemainQuestion(array $questions, Collection $questionDBs)
     {
         $index = 0;
-        Log::debug(sizeof($questions));
-        Log::debug(sizeof($questionDBs));
         foreach ($questionDBs as $questionDB) {
             if ($index < sizeof($questions)) {
                 $questionDB->content = $questions[$index]["content"];
@@ -109,12 +103,11 @@ class QuestionService implements IQuestionService
                 }
                 $questionDB->push();
             } else {
-                Log::debug("allow delete");
                 $questionDB->delete();
             }
             $index++;
         };
-        return $index;
+        return array_slice($questions, $index);
     }
 
     protected function addNewQuestion(array $question, int $setQuestionId)
@@ -139,5 +132,12 @@ class QuestionService implements IQuestionService
             ]);
         }
         return $answersDB;
+    }
+
+    protected function getQuestionInSet(int $setQuestionId)
+    {
+        return Question::where("set_question_id", $setQuestionId)
+            ->with("answers")
+            ->get();
     }
 }
