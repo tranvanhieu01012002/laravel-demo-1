@@ -56,6 +56,8 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('set-questions')->group(function(){
         Route::get('/', [SetQuestionController::class, "getAll"]);
         Route::get('/{id}/questions',[SetQuestionController::class,"getQuestions"]);
+
+        Route::put('/{id}', [SetQuestionController::class, "update"]);
         Route::post('/', [SetQuestionController::class, "create"]);
         Route::delete('/{id}', [SetQuestionController::class, "delete"]);
     });

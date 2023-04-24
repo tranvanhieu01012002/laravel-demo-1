@@ -10,4 +10,5 @@ interface ISetQuestionService
     public function create(Request $request);
     public function delete(int $id);
     public function getQuestions(int $id): array;
+    public function update(int $id, Request $request);
 }

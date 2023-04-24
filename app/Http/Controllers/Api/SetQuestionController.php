@@ -38,4 +38,10 @@ class SetQuestionController extends Controller
         $response = $this->setQuestion->getQuestions($id);
         return response()->json($response, 200);
     }
+
+    public function update(int $id, Request $request)
+    {
+        $response = $this->setQuestion->update($id, $request);
+        return response()->json($response, 200);
+    }
 }

@@ -37,12 +37,12 @@ class SetQuestionService implements ISetQuestionService
     {
         $id = intval($id);
         try {
-            $setQuestion = SetQuestion::where("id",$id)
+            $setQuestion = SetQuestion::where("id", $id)
                 ->with('questions.answers')
                 ->first();
             return [
-                'status'=> true,
-                'data' => $setQuestion->questions,  
+                'status' => true,
+                'data' => $setQuestion->questions,
             ];
         } catch (\Throwable $th) {
             return [
@@ -50,5 +50,14 @@ class SetQuestionService implements ISetQuestionService
                 'data' =>  $th->getMessage()
             ];
         }
+    }
+
+    public function update(int $id, Request $request)
+    {
+        $setQuestion = SetQuestion::find($id);
+        $setQuestion->name = $request->input("name");
+        $setQuestion->save();
+        
+        return $this->getAll();
     }
 }
