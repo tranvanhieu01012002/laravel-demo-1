@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\SetQuestion;
 use App\Services\Question\ISetQuestionService;
 use Illuminate\Http\Request;
 
@@ -41,6 +42,10 @@ class SetQuestionController extends Controller
 
     public function update(int $id, Request $request)
     {
+        $user = $request->user();
+        if ($user->cannot("update", SetQuestion::find($id))) {
+            return response()->json(["data"=> "You can not update"], 401);
+        }
         $response = $this->setQuestion->update($id, $request);
         return response()->json($response, 200);
     }
