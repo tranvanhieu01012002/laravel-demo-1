@@ -23,8 +23,8 @@ class RoomController extends Controller
         } else return response()->json($response, 404);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return response()->json($this->roomService->create());
+        return response()->json($this->roomService->create($request));
     }
 }

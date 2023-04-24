@@ -6,6 +6,7 @@ use App\Constants\Question;
 use App\Constants\Room;
 use App\Models\User;
 use App\Services\Question\QuestionService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use \Illuminate\Redis\Connections\Connection;
@@ -15,9 +16,11 @@ class RoomService implements IRoomService
     public function open(int $id): array
     {
         $redis = Redis::connection();
-        $roomOwnerId = $redis->get($id);
+        $redisValueInfo = $redis->get($id);
+        $redisValueInfo = json_decode($redisValueInfo);
+        $roomOwnerId = $redisValueInfo->user_id;
         if ($roomOwnerId) {
-            
+
             $user = Auth::user();
             $this->addToRedis($redis, $user, $id);
 
@@ -26,7 +29,8 @@ class RoomService implements IRoomService
                 "status" => true,
                 "data" =>  $id,
                 "user_id" => $roomOwnerId,
-                "is_owner" => $isOwner
+                "is_owner" => $isOwner,
+                "set_question_id" => $redisValueInfo->set_question_id
             ];
         } else {
             return [
@@ -36,17 +40,23 @@ class RoomService implements IRoomService
         }
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $setQuestionId = $request->input("set_question_id");
         $redis = Redis::connection();
         $currentKeys = $redis->keys("*");
         $key = $this->generateRoomId(2, 2000, $currentKeys);
         $userId = Auth::id();
-        $redis->set($key, $userId, "EX", Room::EXPIRED_TIME * 60);
+        $redisValueInfo = [
+            "user_id" => $userId,
+            "set_question_id" => $setQuestionId
+        ];
+        $redis->set($key, json_encode($redisValueInfo), "EX", Room::EXPIRED_TIME * 60);
 
         return [
             "room" => $key,
-            "user_id" => $userId
+            "user_id" => $userId,
+            "set_question_id" => $setQuestionId
         ];
     }
 
