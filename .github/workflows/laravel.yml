@@ -46,3 +46,15 @@ jobs:
         run: php artisan db:seed
       - name: Run tests
         run: php artisan test --filter AuthControllerTest
+
+  run-shell-command:
+      name: Run some command
+      runs-on: ubuntu-latest
+      steps:
+        - name: Echo a string
+          run: echo "Hello sir"
+        - name: Run multiline
+          run: |
+            node -v
+            npm -v
+    
