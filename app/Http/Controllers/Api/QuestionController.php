@@ -62,6 +62,10 @@ class QuestionController extends Controller
 
     public function update(Request $request)
     {
+        $user = $request->user();
+        if ($user->cannot("update", $request->input("set_question_id"))) {
+            return response()->json(["data"=> "You can not update"], 403);
+        }
         $response = $this->questionService->update($request);
         return response()->json($response);
     }

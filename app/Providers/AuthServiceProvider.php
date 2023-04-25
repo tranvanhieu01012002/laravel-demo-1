@@ -4,7 +4,9 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Models\Question;
 use App\Models\SetQuestion;
+use App\Policies\QuestionPolicy;
 use App\Policies\SetQuestionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -17,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-        SetQuestion::class => SetQuestionPolicy::class
+        SetQuestion::class => SetQuestionPolicy::class,
+        Question::class => QuestionPolicy::class
     ];
 
     /**

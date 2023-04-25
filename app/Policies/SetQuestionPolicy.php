@@ -37,7 +37,7 @@ class SetQuestionPolicy
      */
     public function update(User $user, SetQuestion $setQuestion): bool
     {
-        return $user->id !== $setQuestion->user_id;
+        return $user->id === $setQuestion->user_id;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Question;
+use App\Models\SetQuestion;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -36,10 +37,9 @@ class QuestionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Question $question): bool
+    public function update(User $user, int $set_question_id): bool
     {
-        //
-        return true;
+        return $user->id === SetQuestion::find($set_question_id)->user_id;
     }
 
     /**
