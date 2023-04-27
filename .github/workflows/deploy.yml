@@ -4,6 +4,8 @@ on:
   #   branches: ["master"]
   pull_request:
     branches: ["master"]
+env:
+  AWS_REGION: ap-southeast-1
 jobs:
   unit-test:
     runs-on: ubuntu-latest
@@ -40,35 +42,28 @@ jobs:
         run: php artisan db:seed
       - name: Run tests
         run: php artisan test --filter AuthControllerTest
-  buld:
+  deploy:
+    needs: unit-test
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.1"
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
-      - name: run composer install
-        run: composer install -n --prefer-dist
-      - name: Prepare Laravel Application
-        run: |
-          cp .env.ci .env
-          php artisan key:generate
-          - name: Directory Permissions
-          run: chmod -R 777 storage bootstrap/cache
-      - name: Generate jwt key
-        run: php artisan jwt:generate
-      - name: Create database
-        run: touch database/database.sqlite
-      - name: Clear cache
-        run: |
-          php artisan route:clear
-          php artisan route:cache
-          php artisan config:clear
-          php artisan config:cache
-          composer dump-autoload
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ secrets.IAMROLE_GITHUB }}
+        aws-region: $AWS_REGION
+    - name: notify for codedeploy
+      run: |
+        aws deploy create-deployment \
+          --application-name github-laravel \
+          --deployment-config-name CodeDeployDefault.OneAtATime \
+          --deployment-group-name github-action \
+          --description "My GitHub deployment demo" \
+          --github-location repository=laravel-demo-1,commitId=${{github.sha}}
+  
+        
       
 
     

@@ -1,8 +1,8 @@
 name: Laravel
 
 on:
-  push:
-    branches: [ "master" ]
+  # push:
+  #   branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -60,4 +60,4 @@ jobs:
           run: |
             node -v
             npm -v
-    
+# sed -i 's/DB_DATABASE=laravel/DB_DATABASE=HIHI/g' .env.example
