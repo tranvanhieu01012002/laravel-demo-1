@@ -5,11 +5,8 @@ files:
   - source: /
     destination: /var/www/back-end.g-learning.click
 hooks:
-  BeforeInstall:
+  AfterInstall:
     - location: scripts/install_dependencies.sh
-      timeout: 300
-      runas: ubuntu
-  AfterInstall: 
     - location: scripts/artisans.sh
       timeout: 300
       runas: ubuntu
