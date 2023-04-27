@@ -4,3 +4,43 @@ os: linux
 files:
   - source: /
     destination: /var/www/back-end.g-learning.click
+hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 300
+      runas: ubuntu
+  AfterInstall: 
+    - location: scripts/artisans.sh
+      timeout: 300
+      runas: ubuntu
+  ApplicationStart: 
+    - location: scripts/restart_server.sh
+      timeout: 300
+      runas: ubuntu
+
+# Document
+# https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#appspec-hooks-server
+# example
+# version: 0.0
+# os: linux
+# files:
+#   - source: /
+#     destination: /var/www/html/WordPress
+# hooks:
+#   BeforeInstall:
+#     - location: scripts/install_dependencies.sh
+#       timeout: 300
+#       runas: root
+#   AfterInstall:
+#     - location: scripts/change_permissions.sh
+#       timeout: 300
+#       runas: root
+#   ApplicationStart:
+#     - location: scripts/start_server.sh
+#     - location: scripts/create_test_db.sh
+#       timeout: 300
+#       runas: root
+#   ApplicationStop:
+#     - location: scripts/stop_server.sh
+#       timeout: 300
+#       runas: root

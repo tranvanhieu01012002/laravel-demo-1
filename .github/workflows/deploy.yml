@@ -60,7 +60,7 @@ jobs:
           --application-name github-laravel \
           --deployment-group-name github-action \
           --description "My GitHub deployment demo" \
-          --github-location repository=laravel-demo-1,commitId=${{github.sha}}
+          --github-location repository=tranvanhieu01012002/laravel-demo-1,commitId=${{github.sha}}
   
         
       
