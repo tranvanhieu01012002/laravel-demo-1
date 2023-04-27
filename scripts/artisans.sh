@@ -12,6 +12,5 @@ php $ARTISAN cache:clear
 php $ARTISAN config:clear
 php $ARTISAN config:cache
 
-chmod -R 755 storage bootstrap/cache
 
 
