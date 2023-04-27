@@ -57,8 +57,8 @@ jobs:
     - name: notify for codedeploy
       run: |
         aws deploy create-deployment \
-          --application-name github-laravel \
-          --deployment-group-name github-action \
+          --application-name codedeploy-github \
+          --deployment-group-name codedeploy-github \
           --description "My GitHub deployment demo" \
           --github-location repository=tranvanhieu01012002/laravel-demo-1,commitId=${{github.sha}}
   
