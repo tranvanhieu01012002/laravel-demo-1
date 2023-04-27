@@ -33,9 +33,6 @@ jobs:
         run: php artisan jwt:generate
       - name: Create database
         run: touch database/database.sqlite
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
       - name: Clear cache
         run: |
           php artisan route:clear
