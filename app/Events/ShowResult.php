@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ShowResult implements ShouldBroadcastNow
 {
@@ -28,6 +29,7 @@ class ShowResult implements ShouldBroadcastNow
 
     public function broadcastWith()
     {
+        Log::debug("test1");
         return [
             "data" => $this->result,
         ];
