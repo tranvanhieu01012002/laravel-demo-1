@@ -10,7 +10,9 @@ php /var/www/back-end.g-learning.click/artisanroute:cache
 php /var/www/back-end.g-learning.click/artisan cache:clear
 
 php /var/www/back-end.g-learning.click/artisan config:clear
+
 php $ARTISAN config:cache
+php $ARTISAN event:cache
 
 
 
