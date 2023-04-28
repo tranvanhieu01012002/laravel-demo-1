@@ -1,8 +1,8 @@
 #!/bin/bash
 PATH="/var/www/back-end.g-learning.click"
-ARTISAN="${PATH}/artisan"
+ARTISAN="/var/www/back-end.g-learning.click/artisan"
 
-cd $PATH && composer dump-autoload
+cd /var/www/back-end.g-learning.click && composer dump-autoload
 
 php $ARTISAN route:clear
 php $ARTISAN route:cache
