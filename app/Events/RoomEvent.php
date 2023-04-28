@@ -7,9 +7,9 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class RoomEvent implements ShouldBroadcastNow
@@ -27,7 +27,6 @@ class RoomEvent implements ShouldBroadcastNow
 
     public function broadcastWith()
     {
-        Log::debug("hello1");
         return [
             'hello' => 'there'
         ];
