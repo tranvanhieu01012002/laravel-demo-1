@@ -1,6 +1,6 @@
 #!/bin/bash
-PATH="/var/www/back-end.g-learning.click/"
-ARTISAN=$PATH"artisan"
+PATH="/var/www/back-end.g-learning.click"
+ARTISAN="${PATH}/artisan"
 
 cd $PATH && composer dump-autoload
 
