@@ -60,7 +60,8 @@ jobs:
           --application-name codedeploy-github \
           --deployment-group-name codedeploy-github \
           --description "My GitHub deployment demo" \
-          --github-location repository=tranvanhieu01012002/laravel-demo-1,commitId=${{github.sha}}
+          --github-location repository=tranvanhieu01012002/laravel-demo-1,commitId=4ff368e7f396a4b54e603d9e91ed83178422ac2b
+# --github-location repository=tranvanhieu01012002/laravel-demo-1,commitId=${{github.sha}}
   
         
       
