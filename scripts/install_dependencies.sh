@@ -1,5 +1,5 @@
 #! /bin/bash
 PATH=/var/www/back-end.g-learning.click/
-composer install --working-dir=$PATH
-chmod -R 755 $PATH/storage
-chmod -R 755 $PATH/cache
+composer install --working-dir=/var/www/back-end.g-learning.click/
+chmod -R 755 /var/www/back-end.g-learning.click//storage
+chmod -R 755 /var/www/back-end.g-learning.click//cache
