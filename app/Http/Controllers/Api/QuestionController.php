@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\SetQuestion;
 use App\Services\Question\IQuestionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class QuestionController extends Controller
 {
@@ -63,8 +65,9 @@ class QuestionController extends Controller
     public function update(Request $request)
     {
         $user = $request->user();
-        if ($user->cannot("update", $request->input("set_question_id"))) {
-            return response()->json(["data"=> "You can not update"], 403);
+
+        if ($user->cannot("update", SetQuestion::find($request->input("set_question_id")))) {
+            return response()->json(["data" => "You can not update"], 403);
         }
         $response = $this->questionService->update($request);
         return response()->json($response);

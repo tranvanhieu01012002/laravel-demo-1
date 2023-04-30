@@ -37,9 +37,9 @@ class QuestionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, int $set_question_id): bool
+    public function update(User $user, Question $question): bool
     {
-        return $user->id === SetQuestion::find($set_question_id)->user_id;
+        return $user->id === $question->id;
     }
 
     /**
