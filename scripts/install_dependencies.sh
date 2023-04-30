@@ -1,4 +1,4 @@
-#!/bin/bash
-PATH="/var/www/back-end.g-learning.click"
-sudo chmod -R 755 $PATH/storage $PATH/bootstrap/cache
-cd $PATH && composer install -n
+#! /bin/bash
+composer install --working-dir=/var/www/back-end.g-learning.click
+chmod -R 777 /var/www/back-end.g-learning.click/storage
+chmod -R 777 /var/www/back-end.g-learning.click/bootstrap/cache
