@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\GoogleController;
-use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\ErrorController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\RoomController;
@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\SetQuestionController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,6 +23,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return redirect('/');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -53,9 +58,9 @@ Route::middleware('auth:api')->group(function () {
 
     Route::put('questions', [QuestionController::class, 'update']);
 
-    Route::prefix('set-questions')->group(function(){
+    Route::prefix('set-questions')->group(function () {
         Route::get('/', [SetQuestionController::class, "getAll"]);
-        Route::get('/{id}/questions',[SetQuestionController::class,"getQuestions"]);
+        Route::get('/{id}/questions', [SetQuestionController::class, "getQuestions"]);
 
         Route::put('/{id}', [SetQuestionController::class, "update"]);
         Route::post('/', [SetQuestionController::class, "create"]);

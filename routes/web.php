@@ -1,8 +1,9 @@
 <?php
 
 use App\Events\SendMessage;
+use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('broadcast',function(){
+Route::get('broadcast', function () {
     broadcast(new SendMessage());
 });
+
+Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
+    ->name('verification.verify');

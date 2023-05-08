@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Exception;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -54,6 +55,9 @@ class AuthController extends Controller
         ]);
 
         $token = Auth::login($user);
+
+        event(new Registered($user));
+
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
@@ -99,5 +103,4 @@ class AuthController extends Controller
 
         // return auth()->payload();
     }
-
 }
