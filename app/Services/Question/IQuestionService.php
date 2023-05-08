@@ -4,7 +4,8 @@ namespace App\Services\Question;
 
 use Illuminate\Http\Request;
 
-interface IQuestionService {
+interface IQuestionService
+{
     public function getQuestionWithAnswers(int $roomId);
 
     public function nextQuestion(int $roomId);

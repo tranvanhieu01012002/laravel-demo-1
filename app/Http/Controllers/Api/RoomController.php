@@ -20,7 +20,9 @@ class RoomController extends Controller
         $response = $this->roomService->open($id);
         if ($response["status"]) {
             return response()->json($response, 200);
-        } else return response()->json($response, 404);
+        } else {
+            return response()->json($response, 404);
+        }
     }
 
     public function create(Request $request)

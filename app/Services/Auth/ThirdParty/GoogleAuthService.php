@@ -9,7 +9,6 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleAuthService implements IAuthService
 {
-
     public function login(string $token)
     {
         try {

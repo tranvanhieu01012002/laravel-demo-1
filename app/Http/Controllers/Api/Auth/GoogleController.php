@@ -27,8 +27,7 @@ class GoogleController extends Controller
                 'type' => 'bearer',
                 'expires_in' =>  auth()->factory()->getTTL() * 60
             ]);
-        }
-        else{
+        } else {
             return response()->json([
                 'status' => "error",
                 'message' => $responseToken['token']

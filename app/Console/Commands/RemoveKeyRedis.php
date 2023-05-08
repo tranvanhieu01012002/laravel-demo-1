@@ -29,8 +29,7 @@ class RemoveKeyRedis extends Command
         $prefixKey = "presence-room";
         if (Redis::del(Redis::keys($prefixKey.'*'))) {
             $this->info('Success!');
-        }
-        else{
+        } else {
             $this->error("can not delete");
         }
     }

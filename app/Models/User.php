@@ -12,7 +12,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use HasUuids;
 
     /**
      * The attributes that are mass assignable.

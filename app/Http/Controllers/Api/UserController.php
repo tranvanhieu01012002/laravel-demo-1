@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function getAll(){
+    public function getAll()
+    {
         return User::paginate(20);
     }
 
-    public function showUser(string $id){
+    public function showUser(string $id)
+    {
         return User::find($id);
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Services\Room;;
+namespace App\Services\Room;
+
+;
 
 use App\Constants\Question;
 use App\Constants\Room;
@@ -9,7 +11,7 @@ use App\Services\Question\QuestionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
-use \Illuminate\Redis\Connections\Connection;
+use Illuminate\Redis\Connections\Connection;
 
 class RoomService implements IRoomService
 {

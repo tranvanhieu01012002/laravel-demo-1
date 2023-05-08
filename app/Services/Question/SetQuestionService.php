@@ -57,7 +57,7 @@ class SetQuestionService implements ISetQuestionService
         $setQuestion = SetQuestion::find($id);
         $setQuestion->name = $request->input("name");
         $setQuestion->save();
-        
+
         return $this->getAll();
     }
 }

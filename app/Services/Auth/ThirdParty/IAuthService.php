@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Services\Auth\ThirdParty;
 
-interface IAuthService {
+interface IAuthService
+{
     public function login(string $token);
 }

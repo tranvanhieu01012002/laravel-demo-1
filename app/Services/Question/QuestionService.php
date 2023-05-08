@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Redis;
 
 class QuestionService implements IQuestionService
 {
-
     public function getQuestionWithAnswers(int $roomId)
     {
         return Question::take(6)->with("answers")->get();
@@ -127,7 +126,7 @@ class QuestionService implements IQuestionService
     {
         $answersDB = [];
         foreach ($answers as $answer) {
-            array_push($answersDB,  [
+            array_push($answersDB, [
                 "content" => $answer["content"],
                 "is_correct" => $answer["is_correct"]
             ]);

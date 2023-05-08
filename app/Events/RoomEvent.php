@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Redis;
 
 class RoomEvent implements ShouldBroadcastNow
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public string $roomId;
     /**

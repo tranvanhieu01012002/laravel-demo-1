@@ -13,7 +13,9 @@ use Illuminate\Queue\SerializesModels;
 
 class ShowResult implements ShouldBroadcastNow
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public array $result;
     public string $roomId;
