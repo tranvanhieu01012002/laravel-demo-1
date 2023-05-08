@@ -17,3 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# tool to fix commond bug
+tools
+.php-cs-fixer.cache
