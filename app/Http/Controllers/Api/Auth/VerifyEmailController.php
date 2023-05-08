@@ -10,7 +10,7 @@ class VerifyEmailController extends Controller
 {
     public function __invoke(string $userId)
     {
-        $user = User::where("id",$userId)->whereNull('email_verified_at')->first();
+        $user = User::where("id", $userId)->whereNull('email_verified_at')->first();
         if (!$user == null) {
             $user->markEmailAsVerified();
         }
