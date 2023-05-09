@@ -25,11 +25,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return redirect('/');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::get('resend/{id}', [VerifyEmailController::class, "resend"])
+    ->middleware(['throttle:6,1'])
+    ->name('verification.send');
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -37,7 +35,7 @@ Route::prefix('auth')->group(function () {
     Route::post('login/google', GoogleController::class);
 });
 
-Route::get("verify-email/{id}",[VerifyEmailController::class,'hasVerifyEmail']);
+Route::get("verify-email/{id}", [VerifyEmailController::class, 'hasVerifyEmail']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', [AuthController::class, 'logout']);

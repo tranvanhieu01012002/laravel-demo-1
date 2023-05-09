@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ResendMail;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -25,5 +26,12 @@ class VerifyEmailController extends Controller
         } else {
             return response()->json(["status" => true]);
         }
+    }
+
+    public function resend(string $userId)
+    {
+        $user = User::find($userId);
+        ResendMail::dispatch($user);
+        return response()->json(["status" => $user]);
     }
 }
