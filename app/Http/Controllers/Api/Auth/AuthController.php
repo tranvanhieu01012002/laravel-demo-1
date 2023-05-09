@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenExpiredException;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -42,11 +43,17 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
+
+        $validated = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
         ]);
+
+        if ($validated->fails()) {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'oh this email is exist',
+            ], 422);
+        }
 
         $user = User::create([
             'name' => $request->name,
@@ -54,18 +61,12 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $token = Auth::login($user);
-
         event(new Registered($user));
 
         return response()->json([
             'status' => 'success',
-            'message' => 'User created successfully',
+            'message' => 'User created successfully please confirm',
             'user' => $user,
-            'authentication' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
         ]);
     }
 
