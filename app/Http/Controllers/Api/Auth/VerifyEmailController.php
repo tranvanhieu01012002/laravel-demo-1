@@ -10,10 +10,20 @@ class VerifyEmailController extends Controller
 {
     public function __invoke(string $userId)
     {
-        $user = User::where("id", $userId)->whereNull('email_verified_at')->first();
-        if (!$user == null) {
-            $user->markEmailAsVerified();
+        $unverifiedUser = User::where("id", $userId)->whereNull('email_verified_at')->first();
+        if (!$unverifiedUser == null) {
+            $unverifiedUser->markEmailAsVerified();
         }
         return "ok reload your page";
+    }
+
+    public function hasVerifyEmail(string $userId)
+    {
+        $verifiedUser = User::where("id", $userId)->whereNotNull('email_verified_at')->first();
+        if ($verifiedUser == null) {
+            return response()->json(["status" => false]);
+        } else {
+            return response()->json(["status" => true]);
+        }
     }
 }

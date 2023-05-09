@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\GoogleController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\ErrorController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\RoomController;
@@ -35,6 +36,8 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login/google', GoogleController::class);
 });
+
+Route::get("verify-email/{id}",[VerifyEmailController::class,'hasVerifyEmail']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', [AuthController::class, 'logout']);
