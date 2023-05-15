@@ -2,6 +2,7 @@
 
 namespace App\Services\Question;
 
+use App\Http\Resources\SetQuestionResource;
 use App\Models\SetQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,7 @@ class SetQuestionService implements ISetQuestionService
     public function getAll()
     {
         $user = Auth::user();
-        return SetQuestion::where("user_id", $user->id)->withCount("questions")->get();
+        return SetQuestionResource::collection(SetQuestion::where("user_id", $user->id)->withCount("questions")->get());
     }
 
     public function create(Request $request)
