@@ -18,6 +18,7 @@ class SetQuestionResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "questions_count" => $this->questions_count,
+            "updated_at" => getTime($this->updated_at),
         ];
     }
 }
