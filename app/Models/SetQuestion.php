@@ -16,7 +16,8 @@ class SetQuestion extends Model
 
     protected $fillable = [
         "user_id",
-        "name"
+        "name",
+        "status"
     ];
 
     public function questions()
@@ -27,5 +28,10 @@ class SetQuestion extends Model
     public function favorite()
     {
         return $this->hasOne(Favorite::class);
+    }
+
+    public function username()
+    {
+        return $this->belongsTo(User::class, "user_id");
     }
 }

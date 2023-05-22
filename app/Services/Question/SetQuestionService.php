@@ -2,6 +2,8 @@
 
 namespace App\Services\Question;
 
+use App\Constants\SetQuestionStatus;
+use App\Http\Resources\PublishSetQuestionResource;
 use App\Http\Resources\SetQuestionResource;
 use App\Models\Favorite;
 use App\Models\SetQuestion;
@@ -85,5 +87,15 @@ class SetQuestionService implements ISetQuestionService
             $favorite = new Favorite(["user_id"=>$userId, "set_question_id" => $id]);
             $favorite->save();
         }
+    }
+
+    public function getPublishQuestion()
+    {
+        $setPublishQuestion = SetQuestion::whereNot("user_id", Auth::id())
+            ->where('status', SetQuestionStatus::PUBLISH)
+            ->with(["username"])
+            ->withCount("questions")
+            ->get();
+        return PublishSetQuestionResource::collection($setPublishQuestion);
     }
 }

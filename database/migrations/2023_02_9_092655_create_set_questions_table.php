@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('set_questions', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('user_id')->nullable();
+            $table->string("status");
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

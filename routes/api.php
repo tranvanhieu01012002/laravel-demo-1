@@ -66,6 +66,8 @@ Route::middleware('auth:api')->group(function () {
         Route::put('/{id}', [SetQuestionController::class, "update"]);
         Route::post('/', [SetQuestionController::class, "create"]);
         Route::delete('/{id}', [SetQuestionController::class, "delete"]);
+
+        Route::get('/publish', [SetQuestionController::class, "getPublishQuestion"]);
     });
 });
 

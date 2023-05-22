@@ -20,7 +20,8 @@ class SetQuestionFactory extends Factory
         $user = User::first();
         return [
             'user_id' => $user->id,
-            'name' => fake()->sentence(5)
+            'name' => fake()->sentence(5),
+            'status' => "private",
         ];
     }
 }

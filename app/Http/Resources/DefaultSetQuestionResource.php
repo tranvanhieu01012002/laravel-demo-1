@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SetQuestionResource extends JsonResource
+class DefaultSetQuestionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,8 +14,11 @@ class SetQuestionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return array_merge(parent::toArray($request), [
-            "favorite" => $this->favorite ? true : false,
-        ]);
+        return [
+            "id" => $this->id,
+            "name" => $this->name,
+            "questions_count" => $this->questions_count,
+            "updated_at" => getTime($this->updated_at),
+        ];
     }
 }
