@@ -16,6 +16,7 @@ class SetQuestionResource extends JsonResource
     {
         return array_merge(parent::toArray($request), [
             "favorite" => $this->favorite ? true : false,
+            "updated_at" => getTime($this->created_at),
         ]);
     }
 }

@@ -75,6 +75,12 @@ class SetQuestionService implements ISetQuestionService
             $setQuestion->name = $request->input("name");
             $setQuestion->save();
         }
+
+        if ($request->has("status")) {
+            $setQuestion->status = $request->get("status") === SetQuestionStatus::PRIVATE ? SetQuestionStatus::PUBLISH : SetQuestionStatus::PRIVATE;
+            $setQuestion->save();
+        }
+
         return $this->getAll();
     }
 
@@ -98,4 +104,5 @@ class SetQuestionService implements ISetQuestionService
             ->get();
         return PublishSetQuestionResource::collection($setPublishQuestion);
     }
+
 }

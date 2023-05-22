@@ -16,6 +16,7 @@ class PublishSetQuestionResource extends DefaultSetQuestionResource
     {
         return array_merge(parent::toArray($request), [
             "username" => $this->username->name,
+            "updated_at" => getTime($this->created_at),
         ]);
     }
 }
