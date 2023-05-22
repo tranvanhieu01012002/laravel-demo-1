@@ -3,6 +3,7 @@
 namespace App\Services\Question;
 
 use App\Http\Resources\SetQuestionResource;
+use App\Models\Favorite;
 use App\Models\SetQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,13 @@ class SetQuestionService implements ISetQuestionService
     public function getAll()
     {
         $user = Auth::user();
-        return SetQuestionResource::collection(SetQuestion::where("user_id", $user->id)->withCount("questions")->get());
+        $setQuestions = SetQuestion::where("user_id", $user->id)
+            ->withCount("questions")
+            ->with(["favorite" =>
+                function ($query) use ($user) {
+                    $query->where("user_id", $user->id);
+                }]);
+        return SetQuestionResource::collection($setQuestions->get());
     }
 
     public function create(Request $request)
@@ -56,9 +63,27 @@ class SetQuestionService implements ISetQuestionService
     public function update(int $id, Request $request)
     {
         $setQuestion = SetQuestion::find($id);
-        $setQuestion->name = $request->input("name");
-        $setQuestion->save();
+        $userId = Auth::id();
 
+        if ($request->has("favorite")) {
+            $this->updateWithFavorite($id, $request, $userId);
+        }
+
+        if ($request->has("name")) {
+            $setQuestion->name = $request->input("name");
+            $setQuestion->save();
+        }
         return $this->getAll();
+    }
+
+    public function updateWithFavorite(int $id, Request $request, string $userId)
+    {
+        if ($request->get("favorite")) {
+            $favoriteDB = Favorite::where("set_question_id", $id)->where("user_id", $userId);
+            $favoriteDB->delete();
+        } else {
+            $favorite = new Favorite(["user_id"=>$userId, "set_question_id" => $id]);
+            $favorite->save();
+        }
     }
 }

@@ -19,6 +19,7 @@ class SetQuestionResource extends JsonResource
             "name" => $this->name,
             "questions_count" => $this->questions_count,
             "updated_at" => getTime($this->updated_at),
+            "favorite" => $this->favorite ? true : false,
         ];
     }
 }

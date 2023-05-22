@@ -24,4 +24,8 @@ class SetQuestion extends Model
         return $this->hasMany(Question::class);
     }
 
+    public function favorite()
+    {
+        return $this->hasOne(Favorite::class);
+    }
 }

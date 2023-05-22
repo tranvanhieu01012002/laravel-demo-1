@@ -75,4 +75,9 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         return $this->hasMany(SetQuestion::class);
     }
+
+    public function favorite()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 }
