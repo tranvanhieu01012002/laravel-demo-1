@@ -12,4 +12,5 @@ interface ISetQuestionService
     public function getQuestions(int $id): array;
     public function update(int $id, Request $request);
     public function getPublishQuestion();
+    public function fork(Request $request): string;
 }

@@ -68,6 +68,7 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/{id}', [SetQuestionController::class, "delete"]);
 
         Route::get('/publish', [SetQuestionController::class, "getPublishQuestion"]);
+        Route::post('/fork', [SetQuestionController::class, "fork"]);
     });
 });
 

@@ -55,4 +55,10 @@ class SetQuestionController extends Controller
         $response = $this->setQuestion->getPublishQuestion();
         return response()->json($response, 200);
     }
+
+    public function fork(Request $request)
+    {
+        $response = $this->setQuestion->fork($request);
+        return response()->json($response, 200);
+    }
 }

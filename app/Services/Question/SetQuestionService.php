@@ -105,4 +105,10 @@ class SetQuestionService implements ISetQuestionService
         return PublishSetQuestionResource::collection($setPublishQuestion);
     }
 
+    public function fork(Request $request): string
+    {
+        $setQuestion = SetQuestion::find($request->input("id"));
+        $setQuestion->replicateRow();
+        return response()->json(["success"]);
+    }
 }
