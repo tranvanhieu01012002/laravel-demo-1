@@ -18,9 +18,9 @@ class SetQuestionService implements ISetQuestionService
         $setQuestions = SetQuestion::where("user_id", $user->id)
             ->withCount("questions")
             ->with(["favorite" =>
-                function ($query) use ($user) {
-                    $query->where("user_id", $user->id);
-                }]);
+            function ($query) use ($user) {
+                $query->where("user_id", $user->id);
+            }]);
         return SetQuestionResource::collection($setQuestions->get());
     }
 
@@ -90,7 +90,7 @@ class SetQuestionService implements ISetQuestionService
             $favoriteDB = Favorite::where("set_question_id", $id)->where("user_id", $userId);
             $favoriteDB->delete();
         } else {
-            $favorite = new Favorite(["user_id"=>$userId, "set_question_id" => $id]);
+            $favorite = new Favorite(["user_id" => $userId, "set_question_id" => $id]);
             $favorite->save();
         }
     }
@@ -109,6 +109,6 @@ class SetQuestionService implements ISetQuestionService
     {
         $setQuestion = SetQuestion::find($request->input("id"));
         $setQuestion->replicateRow();
-        return response()->json(["success"]);
+        return "success";
     }
 }
