@@ -196,6 +196,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
 
+        Intervention\Image\ImageServiceProvider::class,
+
     ],
 
     /*
@@ -212,6 +214,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Redis' => Illuminate\Support\Facades\Redis::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ])->toArray(),
 
 ];

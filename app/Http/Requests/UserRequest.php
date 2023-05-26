@@ -15,7 +15,7 @@ class UserRequest extends FormRequest
      */
     public function authorize(Request $request): bool
     {
-        return $request->get("id") === Auth::id();
+        return $request->route("id") == Auth::id();
     }
 
     /**
@@ -26,7 +26,9 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|string",
+            // "name" =>  $request->hasFile("image") ? "nullable" : "required|string",
+            // "image" => "mimes:png,jpg|max:8129|file|required"
+            "image" => "mimes:png,jpg|max:8129|file|required"
         ];
     }
 
@@ -35,7 +37,7 @@ class UserRequest extends FormRequest
 
         $errors = $validator->errors();
         throw new HttpResponseException(
-            $this->responseErrorWithData($errors->toArray(), 422)
+            response()->json($errors->toArray(), 422)
         );
     }
 }

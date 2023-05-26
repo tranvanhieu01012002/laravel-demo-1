@@ -25,9 +25,13 @@ class UserController extends Controller
         return User::find($id);
     }
 
-    public function updateInfo(UserRequest $request)
+    public function update(UserRequest $request)
     {
-        $response =  $this->userService->updateInfo($request);
+        if ($request->hasFile("image")) {
+            $response = $this->userService->updateImage($request);
+        } else {
+            $response =  $this->userService->updateInfo($request);
+        }
         return response()->json($response["data"], $response["code"]);
     }
 }
