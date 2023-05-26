@@ -38,9 +38,12 @@ Route::prefix('auth')->group(function () {
 Route::get("verify-email/{id}", [VerifyEmailController::class, 'hasVerifyEmail']);
 
 Route::middleware('auth:api')->group(function () {
+
     Route::get('logout', [AuthController::class, 'logout']);
     Route::get('refresh', [AuthController::class, 'refresh']);
     Route::get('profile', [AuthController::class, 'me']);
+    Route::put('profile/{id}', [UserController::class, 'updateInfo']);
+
     Route::get('users', [UserController::class, 'getAll']);
     Route::get('users/{id}', [UserController::class, 'showUser']);
 
