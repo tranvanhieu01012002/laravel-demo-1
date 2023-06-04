@@ -17,8 +17,10 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email')->unique();
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+
             $table->string('third_party',255)->nullable();
             $table->text('image')->nullable();
             $table->rememberToken();
