@@ -1,5 +1,6 @@
 #!/bin/bash
 
+composer install --working-dir=/var/www/back-end.g-learning.click
 composer dump-autoload--working-dir=/var/www/back-end.g-learning.click
 
 php /var/www/back-end.g-learning.click/artisan route:clear
