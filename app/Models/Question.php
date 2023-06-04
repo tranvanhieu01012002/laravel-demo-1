@@ -18,7 +18,8 @@ class Question extends Model
 
     protected $fillable = [
         "content",
-        "set_question_id"
+        "set_question_id",
+        "image"
     ];
 
     public function answers(): HasMany
@@ -29,5 +30,18 @@ class Question extends Model
     public function setQuestion(): BelongsTo
     {
         return $this->belongsTo(SetQuestion::class);
+    }
+
+    public function replicateRow(int $setQuestionId)
+    {
+        $clone = $this->replicate();
+        $clone->set_question_id = $setQuestionId;
+        $clone->push();
+
+        foreach ($this->answers as $answer) {
+            $clone->answers()->create($answer->toArray());
+        }
+
+        $clone->save();
     }
 }

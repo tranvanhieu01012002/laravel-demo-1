@@ -2,6 +2,8 @@
 
 use Carbon\Carbon;
 
+define("S3_ROOT", "https://game-glearning.s3.ap-southeast-1.amazonaws.com/");
+
 if (!function_exists('getTime')) {
     function getTime($date)
     {
@@ -37,5 +39,20 @@ if (!function_exists('addSIfMany')) {
             return $number . ' ' . $string .  ' ago';
         }
         return $number . ' ' . $string . 's' .  ' ago';
+    }
+}
+
+
+if (!function_exists("getS3Url")) {
+    function getS3Url(string $path): string
+    {
+        return "https://game-glearning.s3.ap-southeast-1.amazonaws.com/" . $path;
+    }
+}
+
+if (!function_exists("getPathS3FromDB")) {
+    function getPathS3FromDB(string $fullPath): string
+    {
+        return substr($fullPath, strlen(S3_ROOT));
     }
 }

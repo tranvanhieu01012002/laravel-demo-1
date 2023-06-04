@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class SetQuestion extends Model
 {
@@ -33,5 +34,18 @@ class SetQuestion extends Model
     public function username()
     {
         return $this->belongsTo(User::class, "user_id");
+    }
+
+    public function replicateRow()
+    {
+        $clone = $this->replicate();
+        $clone->user_id = Auth::id();
+        $clone->push();
+
+        foreach ($this->questions as $question) {
+            $question->replicateRow($clone->id);
+        }
+
+        $clone->save();
     }
 }

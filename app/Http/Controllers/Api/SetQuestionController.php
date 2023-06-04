@@ -44,7 +44,7 @@ class SetQuestionController extends Controller
     {
         $user = $request->user();
         if ($user->cannot("update", SetQuestion::find($id))) {
-            return response()->json(["data"=> "You can not update"], 401);
+            return response()->json(["data" => "You can not update"], 401);
         }
         $response = $this->setQuestion->update($id, $request);
         return response()->json($response, 200);
@@ -54,5 +54,11 @@ class SetQuestionController extends Controller
     {
         $response = $this->setQuestion->getPublishQuestion();
         return response()->json($response, 200);
+    }
+
+    public function fork(Request $request)
+    {
+        $response = $this->setQuestion->fork($request);
+        return response()->json(["status" => $response], 200);
     }
 }

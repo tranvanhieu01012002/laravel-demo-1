@@ -38,9 +38,12 @@ Route::prefix('auth')->group(function () {
 Route::get("verify-email/{id}", [VerifyEmailController::class, 'hasVerifyEmail']);
 
 Route::middleware('auth:api')->group(function () {
+
     Route::get('logout', [AuthController::class, 'logout']);
     Route::get('refresh', [AuthController::class, 'refresh']);
     Route::get('profile', [AuthController::class, 'me']);
+    Route::put('profile/{id}', [UserController::class, 'update']);
+
     Route::get('users', [UserController::class, 'getAll']);
     Route::get('users/{id}', [UserController::class, 'showUser']);
 
@@ -68,6 +71,7 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/{id}', [SetQuestionController::class, "delete"]);
 
         Route::get('/publish', [SetQuestionController::class, "getPublishQuestion"]);
+        Route::post('/fork', [SetQuestionController::class, "fork"]);
     });
 });
 
